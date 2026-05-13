@@ -72,7 +72,7 @@ export default function StepIdentity({ data, onNext }: Props) {
           <select
             value={v.country || 'MV'}
             onChange={e => set('country', e.target.value)}
-            className={input()}}
+            className={input()}
           >
             {COUNTRIES.map(c => (
               <option key={c.code} value={c.code}>
