@@ -1,0 +1,117 @@
+// ══════════════════════════════════════════════════════
+//  Body Analytics — Prisma Schema
+//  Database: PostgreSQL (Neon serverless)
+// ══════════════════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ── One row per person/submission session ─────────────
+model Profile {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Personal info
+  name        String
+  email       String
+  country     String
+  phone       String
+  whatsapp    Boolean  @default(false)
+  viber       Boolean  @default(false)
+  gender      String   // "male" | "female"
+
+  // Physical baseline
+  heightCm    Float
+  weightKg    Float
+  recordedAt  DateTime // when the measurement was taken
+
+  // Relations
+  measurements Measurement[]
+  metrics      Metric[]
+  reports      Report[]
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+// ── One row per measurement session (monthly) ─────────
+model Measurement {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  monthNumber Int      @default(1)   // 1 = baseline, 2 = month 2, etc.
+
+  // All 10 body measurements (inches)
+  neck        Float
+  chest       Float
+  waist       Float
+  hips        Float
+  rightArm    Float
+  leftArm     Float
+  rightThigh  Float
+  leftThigh   Float
+  rightCalf   Float
+  leftCalf    Float
+
+  // Relation
+  profileId   String
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([monthNumber])
+}
+
+// ── Calculated health metrics per session ─────────────
+model Metric {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+
+  bmi           Float
+  bmiCategory   String   // "Normal" | "Overweight" | "Obese Class I" etc.
+  bodyFatPct    Float    // Navy circumference method
+  leanMassKg    Float
+  fatMassKg     Float
+  whr           Float    // Waist-to-Hip ratio
+  whRatio       Float    // Waist-to-Height ratio
+  bodyShape     String   // "Oval / Round" | "Trapezoid" | etc.
+  symmetryScore Float    // 0-100
+
+  // Month 2 targets
+  targetWeightKg  Float
+  targetWaistIn   Float
+  targetBodyFat   Float
+  targetBmi       Float
+  targetWhr       Float
+  fatToLoseKg     Float
+  idealWeightLow  Float
+  idealWeightHigh Float
+
+  // Relation
+  profileId     String
+  profile       Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+}
+
+// ── Report delivery tracking ───────────────────────────
+model Report {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+
+  pdfUrl      String?   // Google Drive / Vercel Blob URL
+  emailSentAt DateTime?
+  emailStatus String    @default("pending") // "pending" | "sent" | "failed"
+
+  // Relation
+  profileId   String
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+}
