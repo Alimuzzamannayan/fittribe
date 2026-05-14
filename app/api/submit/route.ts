@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db }               from '@/lib/db'
 import { calculateMetrics } from '@/lib/calculations'
-import { sendReportEmail }  from '@/lib/email'
+// import { sendReportEmail }  from '@/lib/email'  // email disabled temporarily
 import { COUNTRIES }        from '@/lib/types'
 
 export async function POST(req: NextRequest) {
@@ -104,61 +104,31 @@ export async function POST(req: NextRequest) {
     })
 
     // ── Build dashboard URL ────────────────────────────
-    const appUrl   = process.env.APP_URL || `https://${req.headers.get('host')}`
-    const dashUrl  = `${appUrl}/dashboard/${profile.id}`
+    const appUrl  = process.env.APP_URL || `https://${req.headers.get('host')}`
+    const dashUrl = `${appUrl}/dashboard/${profile.id}`
 
-    // ── Send email in background (non-blocking) ────────
-    const dateStr = recordedAt.toLocaleDateString('en-US', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-    })
-    const timeStr = body.time
-
-    sendReportEmail({
-      name:      body.name,
-      email:     body.email,
-      country:   country.name,
-      phone:     fullPhone,
-      whatsapp:  body.whatsapp,
-      viber:     body.viber,
-      date:      dateStr,
-      time:      timeStr,
-      weight:    weightKg,
-      bmi:       metrics.bmi,
-      bmiCat:    metrics.bmiCategory,
-      bodyFat:   metrics.bodyFatPct,
-      leanMass:  metrics.leanMassKg,
-      fatToLose: metrics.fatToLoseKg,
-      waist:     m.waist,
-      whr:       metrics.whr,
-      m2Weight:  metrics.targetWeightKg,
-      m2Waist:   metrics.targetWaistIn,
-      pdfUrl:    dashUrl + '/pdf',
-      dashUrl,
-    }).then(async () => {
-      // Mark email as sent
-      await db.report.updateMany({
-        where:  { profileId: profile.id },
-        data:   { emailSentAt: new Date(), emailStatus: 'sent' },
-      })
-    }).catch(async (err) => {
-      console.error('Email failed:', err)
-      await db.report.updateMany({
-        where:  { profileId: profile.id },
-        data:   { emailStatus: 'failed' },
-      })
-    })
+    // Email sending disabled — re-enable once SMTP env vars are configured
+    // sendReportEmail({ ... })
 
     return NextResponse.json({
       success:   true,
       profileId: profile.id,
       dashUrl,
-      message:   'Dashboard created. Report emailed.',
+      message:   'Dashboard created.',
     })
 
-  } catch (err) {
+  } catch (err: any) {
     console.error('Submit error:', err)
+    const isDatabaseError = err?.message?.includes('prisma') ||
+                            err?.message?.includes('connect') ||
+                            err?.code === 'P1001' || err?.code === 'P1003'
     return NextResponse.json(
-      { success: false, message: 'Something went wrong. Please try again.' },
+      {
+        success: false,
+        message: isDatabaseError
+          ? 'Database not configured. Please add DATABASE_URL to your environment variables.'
+          : 'Something went wrong. Please try again.',
+      },
       { status: 500 }
     )
   }
