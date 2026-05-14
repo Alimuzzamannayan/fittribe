@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter }     from 'next/navigation'
+import Image             from 'next/image'
 import StepIdentity      from '@/components/form/StepIdentity'
 import StepMeasurements  from '@/components/form/StepMeasurements'
 import StepReview        from '@/components/form/StepReview'
@@ -68,14 +69,15 @@ export default function HomePage() {
       {/* ── Top nav ── */}
       <nav className="bg-white border-b-4 border-brand-green sticky top-0 z-10 shadow-card">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-green to-[#2a8025] flex items-center justify-center shadow-green text-xl flex-shrink-0">
-              🏃
-            </div>
-            <div>
-              <div className="font-oswald font-bold text-lg text-brand-navy leading-none">FitTribe</div>
-              <div className="text-[9px] text-muted2 tracking-widest uppercase">Body Analytics</div>
-            </div>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/Logo.png"
+              alt="FitTribe"
+              width={48}
+              height={48}
+              className="object-contain"
+              priority
+            />
           </div>
           <div className="hidden sm:flex items-center gap-2 text-xs text-muted2">
             <span className="bg-bg px-3 py-1.5 rounded-full border border-border">📊 Dashboard</span>
@@ -90,9 +92,12 @@ export default function HomePage() {
         <div className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(circle at 85% 50%, rgba(61,168,50,0.15) 0%, transparent 60%)' }} />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14 relative">
-          <p className="text-[10px] font-oswald font-medium tracking-[0.3em] uppercase text-brand-green mb-3">
-            Body Analytics System
-          </p>
+          <div className="flex items-center gap-4 mb-4">
+            <Image src="/Logo.png" alt="FitTribe" width={64} height={64} className="object-contain drop-shadow-lg" priority />
+            <p className="text-[10px] font-oswald font-medium tracking-[0.3em] uppercase text-brand-green">
+              Body Analytics System
+            </p>
+          </div>
           <h1 className="font-oswald font-bold uppercase leading-none text-4xl sm:text-6xl md:text-7xl text-white mb-5">
             Your Personal<br />
             <span className="gradient-text">Fitness Dashboard</span>

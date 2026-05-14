@@ -5,9 +5,6 @@ import { calculateMetrics } from '@/lib/calculations'
 import { COUNTRIES }        from '@/lib/types'
 
 export async function POST(req: NextRequest) {
-  const dbUrl = process.env.DATABASE_URL || ''
-  console.log('DB_CHECK hasQuote:', dbUrl[0] === '"', '| hasPostgres:', dbUrl.includes('postgresql'), '| len:', dbUrl.length)
-
   try {
     const body = await req.json()
 
@@ -121,7 +118,7 @@ export async function POST(req: NextRequest) {
     })
 
   } catch (err: any) {
-    console.error('ERRCODE:', err?.code, '| ERRMSG:', err?.message?.slice(0, 120))
+    console.error('Submit error:', err?.code, err?.message?.slice(0, 200))
     const isDatabaseError = err?.message?.includes('prisma') ||
                             err?.message?.includes('connect') ||
                             err?.code === 'P1001' || err?.code === 'P1003'
