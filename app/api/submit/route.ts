@@ -5,6 +5,9 @@ import { calculateMetrics } from '@/lib/calculations'
 import { COUNTRIES }        from '@/lib/types'
 
 export async function POST(req: NextRequest) {
+  const dbUrl = process.env.DATABASE_URL
+  console.log('DB_URL present:', !!dbUrl, '| starts:', dbUrl?.slice(0, 30))
+
   try {
     const body = await req.json()
 
