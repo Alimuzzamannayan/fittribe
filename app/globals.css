@@ -4,131 +4,98 @@
 
 @layer base {
   :root {
-    --cream:    #f7f4ef;
-    --paper:    #ffffff;
-    --border:   #e8e2d8;
-    --border2:  #d0c8b8;
-    --ink:      #1c1810;
-    --ink2:     #3a3228;
-    --muted:    #8c8070;
-    --muted2:   #c0b8a8;
-    --red:      #d63a1a;
-    --orange:   #e87a20;
-    --gold:     #d4a020;
-    --green:    #2a9040;
-    --teal:     #0a7868;
-    --blue:     #1868b0;
+    --bg:      #f0f4f8;
+    --paper:   #ffffff;
+    --border:  #dde8f0;
+    --border2: #c8d8e8;
+    --ink:     #1a3356;
+    --ink2:    #2a4a70;
+    --muted:   #5a7090;
+    --muted2:  #8a9ab5;
+    --navy:    #1a3356;
+    --green:   #3da832;
+    --orange:  #e8701a;
   }
 
-  * {
-    @apply box-border;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
+  * { @apply box-border; }
+  html { scroll-behavior: smooth; }
   body {
-    background: var(--cream);
+    background: var(--bg);
     color: var(--ink);
   }
 }
 
 @layer utilities {
-  .font-oswald  { font-family: var(--font-oswald), sans-serif; }
-  .font-mulish  { font-family: var(--font-mulish), sans-serif; }
+  .font-oswald { font-family: var(--font-oswald), sans-serif; }
+  .font-mulish { font-family: var(--font-mulish), sans-serif; }
 
-  /* Subtle diagonal texture */
-  .texture-bg {
-    background-image: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 40px,
-      rgba(180, 160, 120, 0.035) 40px,
-      rgba(180, 160, 120, 0.035) 41px
-    );
-  }
+  .card-shadow    { box-shadow: 0 2px 16px rgba(26,51,86,0.08); }
+  .card-shadow-lg { box-shadow: 0 8px 40px rgba(26,51,86,0.12); }
 
-  /* Card shadow */
-  .card-shadow { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
-  .card-shadow-lg { box-shadow: 0 8px 40px rgba(0,0,0,0.10); }
-
-  /* Gradient text */
   .gradient-text {
-    background: linear-gradient(135deg, #d63a1a, #e87a20);
+    background: linear-gradient(135deg, #3da832, #e8701a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Animated bar fill */
-  .animate-bar {
-    animation: growBar 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  /* Ring countdown pulse */
-  .pulse-green {
-    animation: pulseGreen 2s infinite;
-  }
+  .animate-bar  { animation: growBar 1.2s cubic-bezier(0.22,1,0.36,1) both; }
+  .pulse-green  { animation: pulseGreen 2s infinite; }
 }
 
 @keyframes growBar {
   from { width: 0 !important; }
 }
-
 @keyframes growUp {
   from { height: 0 !important; }
 }
-
 @keyframes pulseGreen {
-  0%,100% { box-shadow: 0 0 0 3px rgba(42, 144, 64, 0.2); }
-  50%     { box-shadow: 0 0 0 6px rgba(42, 144, 64, 0.05); }
+  0%,100% { box-shadow: 0 0 0 3px rgba(61,168,50,0.2); }
+  50%     { box-shadow: 0 0 0 6px rgba(61,168,50,0.05); }
 }
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
-  to   { opacity: 1; }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-up {
-  animation: fadeUp 0.5s ease both;
-}
+.animate-fade-up { animation: fadeUp 0.5s ease both; }
+.animate-fade-in { animation: fadeIn 0.4s ease both; }
 
-.animate-fade-in {
-  animation: fadeIn 0.4s ease both;
-}
-
-/* Scrollbar */
 ::-webkit-scrollbar       { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--muted2); border-radius: 2px; }
 
 @layer components {
+  /* Primary CTA — navy */
   .btn-primary {
-    @apply bg-brand-red text-white font-oswald font-semibold uppercase
-           text-sm tracking-wide px-6 py-3 rounded-xl
-           hover:bg-[#b82e10] hover:-translate-y-0.5
-           active:translate-y-0 transition-all duration-150;
-    box-shadow: 0 3px 12px rgba(214,58,26,0.30);
+    @apply bg-brand-navy text-white font-oswald font-bold uppercase
+           text-sm tracking-wide px-6 py-3 rounded-xl w-full sm:w-auto
+           transition-all duration-150
+           hover:-translate-y-0.5 active:translate-y-0;
+    box-shadow: 0 4px 14px rgba(26,51,86,0.30);
   }
+  .btn-primary:hover { background: #152b48; }
+
+  /* Secondary — ghost */
   .btn-secondary {
-    @apply bg-cream text-muted border border-border2 font-oswald font-semibold
+    @apply bg-paper text-muted border border-border2 font-oswald font-semibold
            uppercase text-sm tracking-wide px-6 py-3 rounded-xl
            hover:bg-border hover:text-ink transition-all duration-150;
   }
+
+  /* Generate — green gradient */
   .btn-generate {
     @apply font-oswald font-bold uppercase tracking-wide text-base
            text-white px-8 py-3.5 rounded-xl transition-all duration-150;
-    background: linear-gradient(135deg, #d63a1a, #e87a20);
-    box-shadow: 0 4px 18px rgba(214,58,26,0.35);
+    background: linear-gradient(135deg, #3da832, #2a8025);
+    box-shadow: 0 4px 18px rgba(61,168,50,0.35);
   }
   .btn-generate:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(214,58,26,0.4);
+    box-shadow: 0 8px 24px rgba(61,168,50,0.42);
   }
 }

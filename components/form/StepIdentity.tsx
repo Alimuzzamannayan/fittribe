@@ -43,15 +43,16 @@ export default function StepIdentity({ data, onNext }: Props) {
   const today = new Date().toISOString().split('T')[0]
 
   return (
-    <div className="bg-paper border border-border rounded-3xl p-8 card-shadow animate-fade-up">
-      <h2 className="font-oswald font-bold uppercase text-2xl text-ink mb-1">Personal Info</h2>
-      <p className="text-sm text-muted mb-8 leading-relaxed">
-        Your details are used to calculate BMI, body fat %, and all health ratios. Your full PDF report will be emailed to you.
-      </p>
+    <div className="bg-paper rounded-2xl sm:rounded-3xl card-shadow animate-fade-up overflow-hidden">
+      <div className="bg-gradient-to-r from-brand-navy to-[#213f6b] px-6 py-4">
+        <h2 className="font-oswald font-bold uppercase text-xl text-white">Personal Info</h2>
+        <p className="text-xs text-white/60 mt-0.5">We'll calculate your BMI, body fat % and email your full PDF report</p>
+      </div>
+      <div className="p-5 sm:p-8">
 
       {/* ── Report Delivery ── */}
-      <div className="bg-gradient-to-br from-[rgba(214,58,26,0.05)] to-[rgba(232,122,32,0.05)] border border-[rgba(214,58,26,0.18)] rounded-2xl p-5 mb-6">
-        <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-red mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border border-brand-green/20 rounded-2xl p-5 mb-6">
+        <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-green mb-4 flex items-center gap-2">
           📬 Report Delivery
         </p>
 
@@ -102,7 +103,7 @@ export default function StepIdentity({ data, onNext }: Props) {
         {/* WhatsApp / Viber */}
         <div>
           <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-muted mb-2">This number has</p>
-          <div className="flex gap-2 flex-wrap">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <MsgToggle
               label="WhatsApp" icon="💬"
               sub="Tick if active"
@@ -138,8 +139,8 @@ export default function StepIdentity({ data, onNext }: Props) {
       </div>
 
       {/* ── Basic Info ── */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <Field label="Full Name" error={errs.name} required className="col-span-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <Field label="Full Name" error={errs.name} required className="sm:col-span-2">
           <input
             type="text"
             value={v.name || ''}
@@ -185,8 +186,8 @@ export default function StepIdentity({ data, onNext }: Props) {
                 onClick={() => set('heightUnit', u)}
                 className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all ${
                   v.heightUnit === u
-                    ? 'bg-brand-red text-white'
-                    : 'bg-cream text-muted border border-border2'
+                    ? 'bg-brand-navy text-white'
+                    : 'bg-bg text-muted border border-border2'
                 }`}
               >
                 {u === 'imperial' ? 'ft / in' : 'cm'}
@@ -222,7 +223,7 @@ export default function StepIdentity({ data, onNext }: Props) {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         <Field label="Weight (kg)" error={errs.weightKg} required>
           <div className="relative">
             <input type="number" value={v.weightKg||''} onChange={e=>set('weightKg',+e.target.value)}
@@ -233,7 +234,7 @@ export default function StepIdentity({ data, onNext }: Props) {
         <div />
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         <Field label="Measurement Date" error={errs.date} required>
           <input type="date" value={v.date||today} onChange={e=>set('date',e.target.value)}
             className={input(errs.date)} />
@@ -244,11 +245,12 @@ export default function StepIdentity({ data, onNext }: Props) {
         </Field>
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
         <span className="text-xs font-semibold text-muted2">Step 1 of 3</span>
         <button onClick={handleNext} className="btn-primary">
           Next — Measurements →
         </button>
+      </div>
       </div>
     </div>
   )
@@ -264,11 +266,11 @@ function Field({ label, error, required, children, className = '' }: {
     <div className={className}>
       {label && (
         <label className="block text-[10px] font-bold tracking-[0.16em] uppercase text-muted mb-1.5">
-          {label} {required && <span className="text-brand-red">*</span>}
+          {label} {required && <span className="text-brand-green">*</span>}
         </label>
       )}
       {children}
-      {error && <p className="text-[11px] text-brand-red font-semibold mt-1">{error}</p>}
+      {error && <p className="text-[11px] text-brand-orange font-semibold mt-1">{error}</p>}
     </div>
   )
 }
@@ -281,7 +283,7 @@ function MsgToggle({ label, icon, sub, checked, color, onChange }: {
   const colors = {
     green:  { border: 'border-green-400',  bg: 'bg-green-50',  text: 'text-green-700'  },
     purple: { border: 'border-purple-400', bg: 'bg-purple-50', text: 'text-purple-700' },
-    gray:   { border: 'border-border2',    bg: 'bg-cream',     text: 'text-muted'      },
+    gray:   { border: 'border-border2',    bg: 'bg-bg',        text: 'text-muted'      },
   }
   const c = colors[color]
 
@@ -290,7 +292,7 @@ function MsgToggle({ label, icon, sub, checked, color, onChange }: {
       type="button"
       onClick={() => onChange(!checked)}
       className={`
-        flex items-center gap-2 flex-1 min-w-[110px] rounded-xl p-3
+        flex items-center gap-2 min-w-0 rounded-xl p-3
         border-2 transition-all duration-150 text-left
         ${checked ? `${c.border} ${c.bg}` : 'border-border2 bg-cream'}
       `}
@@ -311,11 +313,11 @@ function MsgToggle({ label, icon, sub, checked, color, onChange }: {
 }
 
 const input = (err?: string) => `
-  w-full bg-cream border rounded-xl px-4 py-2.5
+  w-full bg-bg border rounded-xl px-4 py-2.5
   font-mulish text-sm text-ink outline-none
   transition-all duration-150
-  focus:border-brand-red focus:ring-2 focus:ring-[rgba(214,58,26,0.10)] focus:bg-white
-  ${err ? 'border-brand-red bg-[rgba(214,58,26,0.05)]' : 'border-border2'}
+  focus:border-brand-green focus:ring-2 focus:ring-brand-green/10 focus:bg-white
+  ${err ? 'border-brand-orange bg-brand-orange/5' : 'border-border2'}
 `
 
 // Tailwind needs these to be in source for purging

@@ -32,7 +32,7 @@ const FIELDS: { key: keyof FormData; label: string; hint?: string }[][] = [
 ]
 
 const SECTION_LABELS  = ['Upper Body', 'Mid Body', 'Lower Body']
-const SECTION_COLORS  = ['#1868b0', '#e87a20', '#0a7868']
+const SECTION_COLORS  = ['#1a3356', '#e8701a', '#3da832']
 
 export default function StepMeasurements({ data, onNext, onBack }: Props) {
   const [v, setV]       = useState({ ...data })
@@ -53,12 +53,14 @@ export default function StepMeasurements({ data, onNext, onBack }: Props) {
   }
 
   return (
-    <div className="bg-paper border border-border rounded-3xl p-8 card-shadow animate-fade-up">
-      <h2 className="font-oswald font-bold uppercase text-2xl text-ink mb-1">Body Measurements</h2>
-      <p className="text-sm text-muted mb-8 leading-relaxed">
-        Use a flexible tape measure. Measure at the widest point for each area.
-        All values in <strong>{v.measUnit === 'cm' ? 'centimetres' : 'inches'}</strong>.
-      </p>
+    <div className="bg-paper rounded-2xl sm:rounded-3xl card-shadow animate-fade-up overflow-hidden">
+      <div className="bg-gradient-to-r from-brand-navy to-[#213f6b] px-6 py-4">
+        <h2 className="font-oswald font-bold uppercase text-xl text-white">Body Measurements</h2>
+        <p className="text-xs text-white/60 mt-0.5">
+          Flexible tape measure · widest point · all in <strong className="text-white/80">{v.measUnit === 'cm' ? 'centimetres' : 'inches'}</strong>
+        </p>
+      </div>
+      <div className="p-5 sm:p-8">
 
       {FIELDS.map((section, si) => (
         <div key={si} className="mb-6">
@@ -74,11 +76,11 @@ export default function StepMeasurements({ data, onNext, onBack }: Props) {
             <div className="flex-1 h-px bg-border" />
           </div>
 
-          <div className={`grid gap-3 ${section.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
+          <div className={`grid gap-3 ${section.length === 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2'}`}>
             {section.map(f => (
               <div key={f.key as string}>
                 <label className="block text-[10px] font-bold tracking-[0.14em] uppercase text-muted mb-1.5">
-                  {f.label} <span className="text-brand-red">*</span>
+                  {f.label} <span className="text-brand-green">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -89,11 +91,11 @@ export default function StepMeasurements({ data, onNext, onBack }: Props) {
                     step="0.1"
                     min="1"
                     className={`
-                      w-full bg-cream border rounded-xl px-3 py-2.5 pr-10
+                      w-full bg-bg border rounded-xl px-3 py-2.5 pr-10
                       font-mulish text-sm text-ink outline-none
                       transition-all duration-150
-                      focus:border-brand-red focus:ring-2 focus:ring-[rgba(214,58,26,0.10)] focus:bg-white
-                      ${errs[f.key as string] ? 'border-brand-red bg-[rgba(214,58,26,0.05)]' : 'border-border2'}
+                      focus:border-brand-green focus:ring-2 focus:ring-brand-green/10 focus:bg-white
+                      ${errs[f.key as string] ? 'border-brand-orange bg-brand-orange/5' : 'border-border2'}
                     `}
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-muted2">
@@ -110,17 +112,18 @@ export default function StepMeasurements({ data, onNext, onBack }: Props) {
       ))}
 
       {Object.keys(errs).length > 0 && (
-        <p className="text-sm text-brand-red font-semibold mb-4">
+        <p className="text-sm text-brand-orange font-semibold mb-4">
           ⚠️ Please fill in all measurements before continuing.
         </p>
       )}
 
-      <div className="flex justify-between items-center mt-6">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-6">
         <button onClick={onBack} className="btn-secondary">← Back</button>
         <span className="text-xs font-semibold text-muted2">Step 2 of 3</span>
         <button onClick={() => { if (validate()) onNext(v) }} className="btn-primary">
           Review →
         </button>
+      </div>
       </div>
     </div>
   )

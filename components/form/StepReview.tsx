@@ -33,16 +33,17 @@ export default function StepReview({ data, onBack, onSubmit, loading }: Props) {
   ]
 
   return (
-    <div className="bg-paper border border-border rounded-3xl p-8 card-shadow animate-fade-up">
-      <h2 className="font-oswald font-bold uppercase text-2xl text-ink mb-1">Review & Generate</h2>
-      <p className="text-sm text-muted mb-6 leading-relaxed">
-        Confirm your details then generate your dashboard. Your PDF report will be emailed automatically.
-      </p>
+    <div className="bg-paper rounded-2xl sm:rounded-3xl card-shadow animate-fade-up overflow-hidden">
+      <div className="bg-gradient-to-r from-brand-navy to-[#213f6b] px-6 py-4">
+        <h2 className="font-oswald font-bold uppercase text-xl text-white">Review &amp; Generate</h2>
+        <p className="text-xs text-white/60 mt-0.5">Confirm your details — your PDF report will be emailed automatically</p>
+      </div>
+      <div className="p-5 sm:p-8">
 
       {/* Preview grid */}
-      <div className="grid grid-cols-2 gap-2 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
         {preview.map(p => (
-          <div key={p.label} className="bg-cream rounded-xl px-4 py-3 flex justify-between items-center gap-2">
+          <div key={p.label} className="bg-bg rounded-xl px-4 py-3 flex justify-between items-center gap-2 border border-border">
             <span className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted flex-shrink-0">
               {p.label}
             </span>
@@ -54,11 +55,11 @@ export default function StepReview({ data, onBack, onSubmit, loading }: Props) {
       </div>
 
       {/* What gets calculated */}
-      <div className="bg-[rgba(42,144,64,0.06)] border border-[rgba(42,144,64,0.2)] rounded-2xl p-4 mb-4">
+      <div className="bg-brand-green/5 border border-brand-green/20 rounded-2xl p-4 mb-4">
         <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-brand-green mb-3">
           Auto-calculated from your data
         </p>
-        <div className="grid grid-cols-2 gap-y-1 gap-x-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-4">
           {[
             '✓ BMI & category',         '✓ Body fat % (Navy)',
             '✓ Lean & fat mass',         '✓ Waist–Hip ratio',
@@ -71,8 +72,8 @@ export default function StepReview({ data, onBack, onSubmit, loading }: Props) {
       </div>
 
       {/* Delivery */}
-      <div className="bg-[rgba(24,104,176,0.05)] border border-[rgba(24,104,176,0.18)] rounded-2xl p-4 mb-8">
-        <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-brand-blue mb-3">
+      <div className="bg-brand-navy/5 border border-brand-navy/15 rounded-2xl p-4 mb-8">
+        <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-brand-navy mb-3">
           What you&apos;ll receive
         </p>
         <div className="flex flex-col gap-2">
@@ -87,14 +88,14 @@ export default function StepReview({ data, onBack, onSubmit, loading }: Props) {
         </div>
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
         <button onClick={onBack} disabled={loading} className="btn-secondary disabled:opacity-50">
           ← Edit
         </button>
         <button
           onClick={() => onSubmit({})}
           disabled={loading}
-          className="btn-generate disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
+          className="btn-generate disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 w-full sm:w-auto"
         >
           {loading ? (
             <>
@@ -105,6 +106,7 @@ export default function StepReview({ data, onBack, onSubmit, loading }: Props) {
             '🚀 Generate My Dashboard'
           )}
         </button>
+      </div>
       </div>
     </div>
   )

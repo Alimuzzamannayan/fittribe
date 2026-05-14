@@ -1,18 +1,5 @@
 import type { Metadata } from 'next'
-import { Oswald, Mulish } from 'next/font/google'
 import './globals.css'
-
-const oswald = Oswald({
-  subsets:  ['latin'],
-  variable: '--font-oswald',
-  weight:   ['300', '400', '500', '600', '700'],
-})
-
-const mulish = Mulish({
-  subsets:  ['latin'],
-  variable: '--font-mulish',
-  weight:   ['300', '400', '500', '600', '700'],
-})
 
 export const metadata: Metadata = {
   title:       'Body Analytics — Personal Fitness Dashboard',
@@ -26,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${oswald.variable} ${mulish.variable}`}>
+    <html lang="en">
       <body className="bg-[#f7f4ef] text-[#1c1810] font-mulish antialiased">
         {children}
       </body>
