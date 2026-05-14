@@ -15,7 +15,6 @@ export default function StepReview({ data, onBack, onSubmit, loading }: Props) {
 
   const preview = [
     { label: 'Name',     value: data.name },
-    { label: 'Email',    value: data.email },
     { label: 'Country',  value: `${country.flag} ${country.name}` },
     { label: 'Mobile',   value: `${country.dial} ${data.phone}` },
     { label: 'Messaging',
@@ -36,7 +35,7 @@ export default function StepReview({ data, onBack, onSubmit, loading }: Props) {
     <div className="bg-paper rounded-2xl sm:rounded-3xl card-shadow animate-fade-up overflow-hidden">
       <div className="bg-gradient-to-r from-brand-navy to-[#213f6b] px-6 py-4">
         <h2 className="font-oswald font-bold uppercase text-xl text-white">Review &amp; Generate</h2>
-        <p className="text-xs text-white/60 mt-0.5">Confirm your details — your PDF report will be emailed automatically</p>
+        <p className="text-xs text-white/60 mt-0.5">Confirm your details then generate your personal fitness dashboard</p>
       </div>
       <div className="p-5 sm:p-8">
 
@@ -71,15 +70,15 @@ export default function StepReview({ data, onBack, onSubmit, loading }: Props) {
         </div>
       </div>
 
-      {/* Delivery */}
+      {/* What you'll get */}
       <div className="bg-brand-navy/5 border border-brand-navy/15 rounded-2xl p-4 mb-8">
         <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-brand-navy mb-3">
-          What you&apos;ll receive
+          What you&apos;ll get
         </p>
         <div className="flex flex-col gap-2">
           {[
-            { icon: '📊', text: 'Instant visual dashboard in your browser' },
-            { icon: '📄', text: `Full PDF report emailed to ${data.email}` },
+            { icon: '📊', text: 'Instant visual dashboard with all your metrics' },
+            { icon: '📄', text: 'Full PDF report with your 6-month fitness roadmap' },
           ].map(d => (
             <div key={d.icon} className="flex items-center gap-3 text-sm text-ink2 font-medium">
               <span>{d.icon}</span>{d.text}

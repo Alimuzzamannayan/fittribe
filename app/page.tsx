@@ -81,8 +81,8 @@ export default function HomePage() {
           </div>
           <div className="hidden sm:flex items-center gap-2 text-xs text-muted2">
             <span className="bg-bg px-3 py-1.5 rounded-full border border-border">📊 Dashboard</span>
-            <span className="bg-bg px-3 py-1.5 rounded-full border border-border">📄 PDF</span>
-            <span className="bg-bg px-3 py-1.5 rounded-full border border-border">📧 Email</span>
+            <span className="bg-bg px-3 py-1.5 rounded-full border border-border">📊 Dashboard</span>
+            <span className="bg-bg px-3 py-1.5 rounded-full border border-border">📄 PDF Report</span>
           </div>
         </div>
       </nav>
@@ -104,8 +104,8 @@ export default function HomePage() {
           </h1>
           <div className="flex flex-wrap gap-2">
             <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-brand-green/20 border border-brand-green/40 text-brand-green">📊 Instant Dashboard</span>
+            <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-brand-green/20 border border-brand-green/40 text-brand-green">📊 Instant Dashboard</span>
             <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-brand-green/20 border border-brand-green/40 text-brand-green">📄 PDF Report</span>
-            <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange">📧 Email Delivery</span>
           </div>
         </div>
       </div>

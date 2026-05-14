@@ -46,14 +46,14 @@ export default function StepIdentity({ data, onNext }: Props) {
     <div className="bg-paper rounded-2xl sm:rounded-3xl card-shadow animate-fade-up overflow-hidden">
       <div className="bg-gradient-to-r from-brand-navy to-[#213f6b] px-6 py-4">
         <h2 className="font-oswald font-bold uppercase text-xl text-white">Personal Info</h2>
-        <p className="text-xs text-white/60 mt-0.5">We'll calculate your BMI, body fat % and email your full PDF report</p>
+        <p className="text-xs text-white/60 mt-0.5">We'll calculate your BMI, body fat % and generate your personal fitness dashboard</p>
       </div>
       <div className="p-5 sm:p-8">
 
-      {/* ── Report Delivery ── */}
+      {/* ── Contact Info ── */}
       <div className="bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border border-brand-green/20 rounded-2xl p-5 mb-6">
         <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-green mb-4 flex items-center gap-2">
-          📬 Report Delivery
+          📋 Contact Info
         </p>
 
         {/* Email */}
@@ -62,10 +62,9 @@ export default function StepIdentity({ data, onNext }: Props) {
             type="email"
             value={v.email || ''}
             onChange={e => set('email', e.target.value)}
-            placeholder="your@email.com"
+            placeholder=""
             className={input(errs.email)}
           />
-          <p className="text-[11px] text-muted2 mt-1">Your full PDF report will be sent here</p>
         </Field>
 
         {/* Country */}
@@ -145,7 +144,7 @@ export default function StepIdentity({ data, onNext }: Props) {
             type="text"
             value={v.name || ''}
             onChange={e => set('name', e.target.value)}
-            placeholder="e.g. John Smith"
+            placeholder=""
             className={input(errs.name)}
           />
         </Field>
@@ -227,7 +226,7 @@ export default function StepIdentity({ data, onNext }: Props) {
         <Field label="Weight (kg)" error={errs.weightKg} required>
           <div className="relative">
             <input type="number" value={v.weightKg||''} onChange={e=>set('weightKg',+e.target.value)}
-              placeholder="96.3" step="0.1" min="30" max="300" className={input(errs.weightKg)} />
+              placeholder="" step="0.1" min="30" max="300" className={input(errs.weightKg)} />
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted2">kg</span>
           </div>
         </Field>
@@ -240,7 +239,7 @@ export default function StepIdentity({ data, onNext }: Props) {
             className={input(errs.date)} />
         </Field>
         <Field label="Measurement Time" error={errs.time} required>
-          <input type="time" value={v.time||'20:13'} onChange={e=>set('time',e.target.value)}
+          <input type="time" value={v.time||''} onChange={e=>set('time',e.target.value)}
             className={input(errs.time)} />
         </Field>
       </div>
